@@ -13,8 +13,8 @@ This Magisk module installs the latest stable version of the fd tool to the targ
 ### v1.0 - 2019-05-07
 * Initial release
 
-## fd Source Code
+## Source Code
 * Source [GitHub](https://github.com/sharkdp/fd/)
 
-## Source Code
+## Module Source Code
 * Module [GitHub](https://github.com/henriknelson/fd-magisk-module)
