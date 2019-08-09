@@ -1,0 +1,6 @@
+id=fd-find
+name=fd-find for Android
+version=v7.3.0
+versionCode=1
+author=nelshh
+description=A statically built version of the fd tool for android (aarch64)
