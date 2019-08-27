@@ -31,7 +31,7 @@ PROPFILE=false
 POSTFSDATA=false
 
 # Set to true if you need late_start service script
-LATESTARTSERVICE=false
+LATESTARTSERVICE=true
 
 ##########################################################################################
 # Replace list
@@ -123,27 +123,34 @@ REPLACE="
 
 print_modname() {
   ui_print "*********************************************"
-  ui_print "     fd for Android       	    	       "
-  ui_print "         - v7.3.0                           "
+  ui_print "     fd for Android                          "
+  ui_print "         - v 7.3.0                           "
   ui_print "         - built by nelshh @ xda-developers  "
   ui_print "*********************************************"
 }
 
 # Copy/extract your module files into $MODPATH in on_install.
 on_install() {
-  ui_print "[1/4] Extracting files..";
+  ui_print "[1/5] Extracting files..";
   unzip -o "$ZIPFILE" '*' -d $MODPATH >&2;
-  ui_print "[2/4] Setting permissions..";
+  ui_print "[2/5] Setting permissions..";
 }
 
 set_permissions() {
   # The following is the default rule, DO NOT remove
   set_perm_recursive $MODPATH 0 0 0755 0644;
 
-  ui_print "[3/4] Installing to /system/bin..";
+  ui_print "[3/5] Installing to /system/bin..";
   chown -R 0:0 $MODPATH/system/bin;
   chmod -R 755 $MODPATH/system/bin;
   find $MODPATH/system/bin -type f -exec chmod 755 {} +;
+  find $MODPATH/system/bin -type l -exec chmod 755 {} +;
 
-  ui_print "[4/4] Installation finished";
+  ui_print "[4/5] Installing to /system/usr/share/man..";
+  chown -R 0:0 $MODPATH/system/usr/share/man;
+  chmod -R 755 $MODPATH/system/usr/share/man;
+  find $MODPATH/system/usr/share/man -type d -exec chmod 755 {} +\;
+  find $MODPATH/system/usr/share/man -type f -exec chmod 644 {} +\;
+
+  ui_print "[5/5] Installation finished";
 }

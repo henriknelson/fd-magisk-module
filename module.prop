@@ -1,6 +1,6 @@
-id=fd-ndk
+id=fd-nelshh
 name=fd for Android
 version=v7.3.0
-versionCode=1
+versionCode=5
 author=nelshh
 description=A statically built version of the fd tool for android (aarch64)
