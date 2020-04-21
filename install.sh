@@ -124,7 +124,7 @@ REPLACE="
 print_modname() {
   ui_print "*********************************************"
   ui_print "     fd for Android                          "
-  ui_print "         - v 7.5.0                           "
+  ui_print "         - v 8.0.0                           "
   ui_print "         - built by nelshh @ xda-developers  "
   ui_print "*********************************************"
 }

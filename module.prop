@@ -1,6 +1,6 @@
 id=fd-nelshh
 name=fd for Android
-version=v7.5.0
-versionCode=11
+version=v8.0.0
+versionCode=12
 author=nelshh
 description=A statically built version of the fd tool for android (aarch64)
