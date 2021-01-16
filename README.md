@@ -6,6 +6,9 @@ This Magisk module installs the latest stable version of the fd tool to the targ
 
 ## Change Log
 
+### v1.1 - 2021-01-17
+* Updated fd to version 8.2.1
+
 ### v1.0 - 2019-08-07
 * Initial release
 

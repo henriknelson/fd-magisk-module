@@ -57,10 +57,11 @@ pattern contains an uppercase character (smart case).
 Perform a glob-based search instead of a regular expression search.
 .TP
 .B \-\-regex
-Perform a regular-expression based seach (default). This can be used to override --glob.
+Perform a regular-expression based search (default). This can be used to override --glob.
 .TP
 .B \-F, \-\-fixed\-strings
-Treat the pattern as a literal string instead of a regular expression.
+Treat the pattern as a literal string instead of a regular expression. Note that this also
+performs substring comparison. If you want to match on an exact filename, consider using '\-\-glob'.
 .TP
 .B \-a, \-\-absolute\-path
 Shows the full path starting from the root as opposed to relative paths.
@@ -115,6 +116,9 @@ Only show search results starting at the given depth. See also: '--max-depth' an
 .BI "\-\-exact\-depth " d
 Only show search results at the exact given depth. This is an alias for '--min-depth <depth> --max-depth <depth>'.
 .TP
+.B \-\-prune
+Do not traverse into matching directories.
+.TP
 .BI "\-t, \-\-type " filetype
 Filter search by type:
 .RS
@@ -142,11 +146,17 @@ This option can be used repeatedly to allow for multiple file types.
 Filter search results by file extension
 .IR ext .
 This option can be used repeatedly to allow for multiple possible file extensions.
+
+If you want to search for files without extension, you can use the regex '^[^.]+$'
+as a normal search pattern.
 .TP
 .BI "\-E, \-\-exclude " pattern
 Exclude files/directories that match the given glob pattern.
 This overrides any other ignore logic.
 Multiple exclude patterns can be specified.
+Examples:
+  \-\-exclude '*.pyc'
+  \-\-exclude node_modules
 .TP
 .BI "\-\-ignore-file " path
 Add a custom ignore-file in '.gitignore' format.
@@ -176,6 +186,8 @@ Limit results based on the size of files using the format
 file size must be greater than or equal to this
 .IP '-'
 file size must be less than or equal to this
+.P
+If neither '+' nor '-' is specified, file size must be exactly equal to this.
 .IP 'NUM'
 The numeric size (e.g. 500)
 .IP 'UNIT'
@@ -232,6 +244,20 @@ Examples:
   \-\-owner :students
   \-\-owner "!john:students"
 .TP
+.BI "\-\-base\-directory " path
+Change the current working directory of fd to the provided path. This means that search results will
+be shown with respect to the given base path. Note that relative paths which are passed to fd via the
+positional \fIpath\fR argument or the \fB\-\-search\-path\fR option will also be resolved relative to
+this directory.
+.TP
+.BI "\-\-path\-separator " separator
+Set the path separator to use when printinf file paths. The default is the OS-specific separator
+('/' on Unix, '\\' on Windows).
+.TP
+.BI "\-\-search\-path " search\-path
+Provide paths to search as an alternative to the positional \fIpath\fR argument. Changes the usage to
+\'fd [FLAGS/OPTIONS] \-\-search\-path PATH \-\-search\-path PATH2 [PATTERN]\'
+.TP
 .BI "\-x, \-\-exec " command
 Execute
 .I command
@@ -269,18 +295,19 @@ basename without file extension
 .SH PATTERN SYNTAX
 The regular expression syntax used by fd is documented here:
 
-.UR https://docs.rs/regex/1.0.0/regex/#syntax
-.UE
+    https://docs.rs/regex/1.0.0/regex/#syntax
 
 The glob syntax is documented here:
 
-.UR https://docs.rs/globset/#syntax
-.UE
+    https://docs.rs/globset/#syntax
 .SH ENVIRONMENT
 .TP
 .B LS_COLORS
 Determines how to colorize search results, see
 .BR dircolors (1) .
+.TP
+.B NO_COLOR
+Disables colorized output.
 .TP
 .B XDG_CONFIG_HOME, HOME
 Used to locate the global ignore file. If
